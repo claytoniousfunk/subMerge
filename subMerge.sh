@@ -20,10 +20,16 @@ for FILE in "$DATAPATH"/*.root; do
     echo "Reading file $ITER of $NUMBER_OF_FILES"
     echo "Filename = $FILE[$ITER]"
 
-    hadd $OUTPUT_FILENAME $FILE
+    # add together new file merged file, save in TMP
+    hadd $TMP_FILENAME $FILE $OUTPUT_FILENAME
 
+    # remove the "old merged file"
+    rm $OUTPUT_FILENAME
+
+    # save the output of the "new merged file"
     cp $TMP_FILENAME $OUTPUT_FILENAME
 
+    # remove the temporary file
     rm $TMP_FILENAME
     
 
