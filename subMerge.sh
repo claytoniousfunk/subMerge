@@ -41,7 +41,7 @@ for FILE in "$DATAPATH"/*.root; do
 
     fi
 
-    let PERCENT_COMPLETE=$ITER/$NUMBER_OF_FILES
+    let PERCENT_COMPLETE=100*$ITER/$NUMBER_OF_FILES
     echo -ne "$PERCENT_COMPLETE % \033[0K\r"
 
 done
