@@ -19,14 +19,14 @@ for FILE in "$DATAPATH"/*.root; do
 
     echo "progress: $ITER / $NUMBER_OF_FILES"
     
-    if[$ITER -eq 1] ; then
+    if[ $ITER -eq 1 ] ; then
 
 	# hadd options:
 	# -k : skip corrupt or non-existant files, do not exit
 	# -v 0: set verbosity to 0
 	hadd -k -v 0 $OUTPUT_FILENAME $FILE
 
-    elif[$ITER -gt 1] ; then
+    elif[ $ITER -gt 1 ] ; then
 
 	# add together new file merged file, save in TMP
 	hadd -k -v 0 $TMP_FILENAME $FILE $OUTPUT_FILENAME
