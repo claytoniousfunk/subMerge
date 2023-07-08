@@ -4,21 +4,28 @@
 echo "Enter the path to the data directory:"
 read DATAPATH
 
-#find $DATAPATH -type f >> list-of-file-names.txt
-
-#echo "List of file names saved to list-of-file-names.txt"
-
 NUMBER_OF_FILES=$(ls "$DATAPATH"/*.root | wc -l)
 
 echo "Number of ROOT files in data directory = $NUMBER_OF_FILES"
 
+OUTPUT_FILENAME="subMerge_output.root"
+TMP_FILENAME="subMerge_tmp.root"
+
 ITER=0
 
-for file in "$DATAPATH"/*.root; do
+for FILE in "$DATAPATH"/*.root; do
 
     ((ITER++))
 
     echo "Reading file $ITER of $NUMBER_OF_FILES"
+    echo "Filename = $FILE[$ITER]"
+
+    hadd $OUTPUT_FILENAME $FILE
+
+    cp $TMP_FILENAME $OUTPUT_FILENAME
+
+    rm $TMP_FILENAME
+    
 
 done
 
