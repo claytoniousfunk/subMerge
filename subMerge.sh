@@ -13,11 +13,13 @@ TMP_FILENAME="subMerge_tmp.root"
 
 ITER=0
 
+PERCENT_COMPLETE=0.0
+
 for FILE in "$DATAPATH"/*.root; do
 
     let ITER=$ITER+1
 
-    echo "progress: $ITER / $NUMBER_OF_FILES"
+    #echo "progress: $ITER / $NUMBER_OF_FILES"
     
     if [ $ITER -eq 1 ] ; then
 
@@ -37,7 +39,10 @@ for FILE in "$DATAPATH"/*.root; do
 	# save the output of the "new merged file"
 	mv $TMP_FILENAME $OUTPUT_FILENAME
 
-    fi    
+    fi
+
+    PERCENT_COMPLETE=$(($ITER / $NUMBER_OF_FILES))
+    echo "$PERCENT_COMPLETE %"
 
 done
 
