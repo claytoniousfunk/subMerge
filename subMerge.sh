@@ -41,9 +41,7 @@ for FILE in "$DATAPATH"/*.root; do
 	rm $TMP_FILENAME
 
     else
-	
-	echo ""
-    
+   
     fi    
 
 done
