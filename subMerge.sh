@@ -16,7 +16,7 @@ ITER=0
 
 for file in "$DATAPATH"/*.root; do
 
-    $((ITER++))
+    ITER++
 
     echo "Reading file $ITER of $NUMBER_OF_FILES"
 
