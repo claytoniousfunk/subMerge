@@ -35,10 +35,7 @@ for FILE in "$DATAPATH"/*.root; do
 	rm $OUTPUT_FILENAME
 
 	# save the output of the "new merged file"
-	cp $TMP_FILENAME $OUTPUT_FILENAME
-
-	# remove the temporary file
-	rm $TMP_FILENAME
+	mv $TMP_FILENAME $OUTPUT_FILENAME
 
     fi    
 
