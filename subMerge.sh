@@ -15,7 +15,7 @@ ITER=0
 
 for FILE in "$DATAPATH"/*.root; do
 
-    let ITER = ITER + 1
+    let ITER=$ITER+1
 
     echo "progress: $ITER / $NUMBER_OF_FILES"
     
