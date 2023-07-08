@@ -40,7 +40,6 @@ for FILE in "$DATAPATH"/*.root; do
 	# remove the temporary file
 	rm $TMP_FILENAME
 
-    else
     fi    
 
 done
