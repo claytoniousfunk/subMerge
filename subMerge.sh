@@ -17,9 +17,8 @@ for FILE in "$DATAPATH"/*.root; do
 
     ((ITER++))
 
-    echo "Reading file $ITER of $NUMBER_OF_FILES"
-    echo "Filename = $FILE"
-
+    echo "progress: $ITER / $NUMBER_OF_FILES"
+    
     if($ITER -eq 1) ; then
 
 	hadd $OUTPUT_FILENAME $FILE
@@ -38,8 +37,7 @@ for FILE in "$DATAPATH"/*.root; do
 	# remove the temporary file
 	rm $TMP_FILENAME
 
-    fi
-    
+    fi    
 
 done
 
