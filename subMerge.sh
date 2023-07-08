@@ -11,8 +11,6 @@ echo "Number of ROOT files in data directory = $NUMBER_OF_FILES"
 OUTPUT_FILENAME="subMerge_output.root"
 TMP_FILENAME="subMerge_tmp.root"
 
-NUMBER_OF_CORES=8;
-
 ITER=0
 
 for FILE in "$DATAPATH"/*.root; do
