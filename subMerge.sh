@@ -29,7 +29,7 @@ for FILE in "$DATAPATH"/*.root; do
     elif($ITER -gt 1) ; then
 
 	# add together new file merged file, save in TMP
-	hadd  -k -v 0 $TMP_FILENAME $FILE $OUTPUT_FILENAME
+	hadd -k -v 0 $TMP_FILENAME $FILE $OUTPUT_FILENAME
 
 	# remove the "old merged file"
 	rm $OUTPUT_FILENAME
