@@ -18,19 +18,27 @@ for FILE in "$DATAPATH"/*.root; do
     ((ITER++))
 
     echo "Reading file $ITER of $NUMBER_OF_FILES"
-    echo "Filename = $FILE[$ITER]"
+    echo "Filename = $FILE"
 
-    # add together new file merged file, save in TMP
-    hadd $TMP_FILENAME $FILE $OUTPUT_FILENAME
+    if($ITER -eq 1) ; then
 
-    # remove the "old merged file"
-    rm $OUTPUT_FILENAME
+	hadd $OUTPUT_FILENAME $FILE
 
-    # save the output of the "new merged file"
-    cp $TMP_FILENAME $OUTPUT_FILENAME
+    elif($ITER -gt 1) ; then
 
-    # remove the temporary file
-    rm $TMP_FILENAME
+	# add together new file merged file, save in TMP
+	hadd $TMP_FILENAME $FILE $OUTPUT_FILENAME
+
+	# remove the "old merged file"
+	rm $OUTPUT_FILENAME
+
+	# save the output of the "new merged file"
+	cp $TMP_FILENAME $OUTPUT_FILENAME
+
+	# remove the temporary file
+	rm $TMP_FILENAME
+
+    fi
     
 
 done
