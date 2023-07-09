@@ -46,4 +46,7 @@ for FILE in "$DATAPATH"/*.root; do
 
 done
 
+echo "100 % - DONE!"
+echo "Merged ROOT file : $OUTPUT_FILENAME"
+
 
