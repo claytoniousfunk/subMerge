@@ -15,6 +15,8 @@ ITER=0
 
 PERCENT_COMPLETE=0.0
 
+date
+
 for FILE in "$DATAPATH"/*.root; do
 
     let ITER=$ITER+1
@@ -25,12 +27,12 @@ for FILE in "$DATAPATH"/*.root; do
 
 	# hadd options:
 	# -k : skip corrupt or non-existant files, do not exit
-	hadd -k $OUTPUT_FILENAME $FILE
+	hadd -k -v 0 $OUTPUT_FILENAME $FILE
 
     elif [ $ITER -gt 1 ] ; then
 
 	# add together new file merged file, save in TMP
-	hadd -k $TMP_FILENAME $FILE $OUTPUT_FILENAME
+	hadd -k -v 0 $TMP_FILENAME $FILE $OUTPUT_FILENAME
 
 	# remove the "old merged file"
 	rm $OUTPUT_FILENAME
@@ -48,4 +50,5 @@ done
 echo "100 % - DONE!"
 echo "Merged ROOT file : $OUTPUT_FILENAME"
 
+date
 
