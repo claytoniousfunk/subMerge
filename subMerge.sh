@@ -4,53 +4,55 @@
 echo "Enter the path to the data directory:"
 read DATAPATH
 
-NUMBER_OF_FILES=$(ls "$DATAPATH"/*.root | wc -l)
+# Prompt for batch size
+echo "Enter number of files per batch:"
+read BATCH_SIZE
+
+ROOT_FILES=("$DATAPATH"/*.root)
+NUMBER_OF_FILES=${#ROOT_FILES[@]}
 
 echo "Number of ROOT files in data directory = $NUMBER_OF_FILES"
+echo "Batch size = $BATCH_SIZE"
 
-OUTPUT_FILENAME="subMerge_output.root"
-TMP_FILENAME="subMerge_tmp.root"
-
+FINAL_OUTPUT="subMerge_output.root"
+TMP_OUTPUT="subMerge_tmp.root"
+BATCH_OUTPUTS=()
 ITER=0
-
-PERCENT_COMPLETE=0.0
+BATCH_COUNT=0
 
 date
 
-for FILE in "$DATAPATH"/*.root; do
-
-    let ITER=$ITER+1
-
-    #echo "progress: $ITER / $NUMBER_OF_FILES"
+# Loop over ROOT files in batches
+while [ $ITER -lt $NUMBER_OF_FILES ]; do
+    BATCH_FILES=()
     
-    if [ $ITER -eq 1 ] ; then
+    for ((j=0; j<$BATCH_SIZE && $ITER<$NUMBER_OF_FILES; j++)); do
+        BATCH_FILES+=("${ROOT_FILES[$ITER]}")
+        ((ITER++))
+    done
 
-	# hadd options:
-	# -k : skip corrupt or non-existant files, do not exit
-	hadd -k -v 0 $OUTPUT_FILENAME $FILE
+    BATCH_FILENAME="batch_merge_$BATCH_COUNT.root"
+    BATCH_OUTPUTS+=("$BATCH_FILENAME")
+    
+    echo "Merging batch $BATCH_COUNT with ${#BATCH_FILES[@]} files..."
+    hadd -k -v 0 "$BATCH_FILENAME" "${BATCH_FILES[@]}"
+    
+    ((BATCH_COUNT++))
 
-
-
-    elif [ $ITER -gt 1 ] ; then
-
-	# add together new file merged file, save in TMP
-	hadd -k -v 0 $TMP_FILENAME $FILE $OUTPUT_FILENAME
-
-	# remove the "old merged file"
-	rm $OUTPUT_FILENAME
-
-	# save the output of the "new merged file"
-	mv $TMP_FILENAME $OUTPUT_FILENAME
-
-    fi
-
-    let PERCENT_COMPLETE=100*$ITER/$NUMBER_OF_FILES
+    PERCENT_COMPLETE=$((100 * ITER / NUMBER_OF_FILES))
     echo -ne "$PERCENT_COMPLETE % \033[0K\r"
-
 done
 
+echo
+echo "Merging all batch files into final output..."
+
+# Merge all batch outputs into final file
+hadd -k -v 0 "$FINAL_OUTPUT" "${BATCH_OUTPUTS[@]}"
+
+# Clean up batch files
+rm "${BATCH_OUTPUTS[@]}"
+
 echo "100 % - DONE!"
-echo "Merged ROOT file : $OUTPUT_FILENAME"
+echo "Merged ROOT file : $FINAL_OUTPUT"
 
 date
-
