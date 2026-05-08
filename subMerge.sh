@@ -35,7 +35,7 @@ while [ $ITER -lt $NUMBER_OF_FILES ]; do
     BATCH_OUTPUTS+=("$BATCH_FILENAME")
     
     echo "Merging batch $BATCH_COUNT with ${#BATCH_FILES[@]} files..."
-    hadd -k -v 0 "$BATCH_FILENAME" "${BATCH_FILES[@]}"
+    hadd -k -v 0 -j $(nproc) "$BATCH_FILENAME" "${BATCH_FILES[@]}"
     
     ((BATCH_COUNT++))
 
