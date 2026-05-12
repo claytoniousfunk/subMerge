@@ -47,7 +47,7 @@ echo
 echo "Merging all batch files into final output..."
 
 # Merge all batch outputs into final file
-hadd -k -v 0 "$FINAL_OUTPUT" "${BATCH_OUTPUTS[@]}"
+hadd -k -v 0 -j $(nproc) "$FINAL_OUTPUT" "${BATCH_OUTPUTS[@]}"
 
 # Clean up batch files
 rm "${BATCH_OUTPUTS[@]}"
